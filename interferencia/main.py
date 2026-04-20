@@ -1,5 +1,5 @@
 from fastapi import FastAPI, Form
-from services.user import fill_book, create_table, obtain_book, update_book
+from services.user import fill_book, create_table, obtain_book, update_book, delete_book
 
 app = FastAPI()
 
@@ -28,4 +28,9 @@ async def consultar(id: int):
 @app.put("/formulario/llibres/{id]", response_model=dict)
 async def modificar(id: int, genero: str, editorial: str):
     result = await update_book(id, genero, editorial)
+    return result
+
+@app.delete("/formulario/llibres/{id}", response_model=dict)
+async def eliminar(id: int):
+    result = await delete_book(id)
     return result

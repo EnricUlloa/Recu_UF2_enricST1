@@ -56,3 +56,14 @@ async def update_book(id: int, genero: str, editorial: str):
     cursor.close()
     conn.close()
     return{"mensaje": "Libro actualizado correctamente"}
+
+async def delete_book(id: int):
+    conn = database.connection_db()
+    cursor = conn.cursor()
+    sql_delete = "DELETE FROM llibres WHERE id = %s"
+    cursor.execute(sql_delete, (id,))
+    conn.commit()
+    cursor.close()
+    conn.close()
+    return{"mensaje": "Libro eliminado correctamente"}
+
