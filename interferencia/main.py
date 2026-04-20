@@ -1,5 +1,5 @@
 from fastapi import FastAPI, Form
-from services.user import fill_book, create_table
+from services.user import fill_book, create_table, obtain_book
 
 app = FastAPI()
 
@@ -18,4 +18,9 @@ async def omplir(
         codigoEstanteria: str = Form(...),
     ):
     result = await fill_book(titulo, autor, isbn, sinopsis, genero, anioPublicacion, editorial, numeroPaginas, codigoEstanteria)
+    return result
+
+@app.get("/formualrio/llibres/{id}", response_model=dict)
+async def consultar(id: int):
+    result = await obtain_book(id)
     return result
