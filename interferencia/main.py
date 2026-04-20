@@ -20,7 +20,7 @@ async def omplir(
     result = await fill_book(titulo, autor, isbn, sinopsis, genero, anioPublicacion, editorial, numeroPaginas, codigoEstanteria)
     return result
 
-@app.get("/formualrio/llibres/{id}", response_model=dict)
+@app.get("/formulario/llibres/{id}", response_model=dict)
 async def consultar(id: int):
     result = await obtain_book(id)
     return result

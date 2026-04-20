@@ -1,4 +1,5 @@
 from config import database
+from schema.users_sch import user_schema
 
 def create_table():
     conn = database.connection_db()
@@ -42,14 +43,6 @@ async def obtain_book(id: int):
     result = cursor.fetchone()
     cursor.close()
     conn.close()
-    if result:
-        return{
-            "id": result[0],
-            "titulo": result[1],
-            "autor": result[2],
-            "isbn": result[3],
-            "genero": result[4],
-            "anioPublicacion": result[5],
-            "editorial": result[6]
-        }
-    return{"mensaje": "Libro no encontrado"}
+    if result is None:
+        return{"mensaje": "Libro no encontrado"}
+    return user_schema(result)
