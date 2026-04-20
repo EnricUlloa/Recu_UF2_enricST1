@@ -46,3 +46,13 @@ async def obtain_book(id: int):
     if result is None:
         return{"mensaje": "Libro no encontrado"}
     return user_schema(result)
+
+async def update_book(id: int, genero: str, editorial: str):
+    conn = database.connection_db()
+    cursor = conn.cursor()
+    sql_put = "UPDATE llibres SET genero = %s, editorial = %s WHERE id = %s"
+    cursor.execute(sql_put, (genero, editorial, id))
+    conn.commit()
+    cursor.close()
+    conn.close()
+    return{"mensaje": "Libro actualizado correctamente"}
