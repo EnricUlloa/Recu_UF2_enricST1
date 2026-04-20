@@ -33,3 +33,23 @@ async def fill_book(titulo, autor, isbn, sinopsis, genero, anioPublicacion, edit
     cursor.close()
     conn.close()
     return{"mensaje": "Libro creado correctamente"}
+
+async def obtain_book(id: int):
+    conn = database.connection_db()
+    cursor = conn.cursor()
+    sql_get = "SELECT id, titulo, autor, isbn, genero, anioPublicacion, editorial FROM llibres WHERE id = %s"
+    cursor.execute(sql_get, (id,))
+    result = cursor.fetchone()
+    cursor.close()
+    conn.close()
+    if result:
+        return{
+            "id": result[0],
+            "titulo": result[1],
+            "autor": result[2],
+            "isbn": result[3],
+            "genero": result[4],
+            "anioPublicacion": result[5],
+            "editorial": result[6]
+        }
+    return{"mensaje": "Libro no encontrado"}
